@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="qr_spacing">2dp</dimen>
+    <dimen name="half_spacing">4dp</dimen>
+    <dimen name="one_spacing">8dp</dimen>
+    <dimen name="one_and_half_spacing">12dp</dimen>
+    <dimen name="double_spacing">16dp</dimen>
+    <dimen name="three_spacing">24dp</dimen>
+    <dimen name="four_spacing">32dp</dimen>
+</resources>

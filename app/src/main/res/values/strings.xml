@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Fitness Application</string>
+
+    <string name="empty_label">Тут пока что ничего нет</string>
 </resources>
