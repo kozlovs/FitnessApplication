@@ -27,7 +27,7 @@ class WorkoutsViewModel @Inject constructor(
     ) { state, searchQuery, typeFilter ->
         state.copy(
             workouts = state.workouts.filter { workout ->
-                val searched = searchQuery.isBlank() || (workout.title.contains(searchQuery))
+                val searched = searchQuery.isBlank() || (workout.title.contains(searchQuery, true))
                 val filtered = typeFilter?.let { workout.type == it } ?: true
                 searched && filtered
             }

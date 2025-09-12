@@ -117,10 +117,15 @@ class VideoViewModel @Inject constructor(
         _state.update { it.copy(isPlaying = false) }
     }
 
+    fun startSeek() {
+        _state.update { it.copy(isProgressInteracting = true) }
+    }
+
     fun seekTo(positionPercentage: Int) {
         val duration = player.duration
         val positionMs = positionPercentage * duration / 100
         player.seekTo(positionMs)
+        _state.update { it.copy(isProgressInteracting = true) }
     }
 
     private fun launchTimeObserver() = viewModelScope.launch {

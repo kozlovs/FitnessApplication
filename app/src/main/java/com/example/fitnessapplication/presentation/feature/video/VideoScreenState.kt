@@ -9,6 +9,7 @@ data class VideoScreenState(
     val duration: Long = 0L,
     val currentTime: Long = 0L,
     val process: Int = 0,
+    val isProgressInteracting: Boolean = false,
     val isStreamLoading: Boolean = true,
     val error: Exception? = null
 )

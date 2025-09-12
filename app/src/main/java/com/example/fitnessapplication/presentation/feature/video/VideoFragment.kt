@@ -72,7 +72,7 @@ class VideoFragment : Fragment() {
                 ) {}
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                    //todo блокировать перемещение сикбара
+                    seekBar?.let { viewModel.startSeek() }
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
@@ -101,7 +101,7 @@ class VideoFragment : Fragment() {
         playerControlLayout.root.isVisible = !state.isStreamLoading
         playerControlLayout.timeLabel.text = LocalTime.fromMillisecondOfDay(state.currentTime.toInt()).toMinuteSecondFormat()
         playerControlLayout.durationLabel.text = LocalTime.fromMillisecondOfDay(state.duration.toInt()).toMinuteSecondFormat()
-        if (!state.isStreamLoading && !playerControlLayout.seekBar.isFocused) {
+        if (!state.isStreamLoading && !state.isProgressInteracting) {
             playerControlLayout.seekBar.setProgress(state.process, false)
         }
     }
