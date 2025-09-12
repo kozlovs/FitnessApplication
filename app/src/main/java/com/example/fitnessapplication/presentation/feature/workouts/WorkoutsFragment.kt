@@ -7,18 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fitnessapplication.R
 import com.example.fitnessapplication.databinding.FragmentWorkoutsBinding
+import com.example.fitnessapplication.domain.model.workouts.WorkoutType
 import com.example.fitnessapplication.presentation.util.launchOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class WorkoutsFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = WorkoutsFragment()
-    }
 
     private var workoutsAdapter: WorkoutsAdapter? = null
     private var _binding: FragmentWorkoutsBinding? = null
@@ -58,6 +57,17 @@ class WorkoutsFragment : Fragment() {
 
     private fun setListeners() = with(binding) {
         swipeRefresh.setOnRefreshListener { viewModel.refreshData() }
+        workoutTypeChipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
+            when (checkedIds.firstOrNull()) {
+                R.id.workout_type_training -> WorkoutType.TRAINING
+                R.id.workout_type_broadcast -> WorkoutType.BROADCAST
+                R.id.workout_type_set -> WorkoutType.SET
+                else -> null
+            }.let { viewModel.setTypeFilter(it) }
+        }
+        etSearch.doAfterTextChanged {
+            it?.let { viewModel.setSearchQuery(it.toString()) }
+        }
     }
 
     private fun subscribe() {

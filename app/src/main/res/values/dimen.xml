@@ -7,4 +7,6 @@
     <dimen name="double_spacing">16dp</dimen>
     <dimen name="three_spacing">24dp</dimen>
     <dimen name="four_spacing">32dp</dimen>
+
+    <dimen name="chip_height">42dp</dimen>
 </resources>

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessapplication.databinding.ItemWorkoutBinding
 import com.example.fitnessapplication.domain.model.workouts.Workout
-import com.example.fitnessapplication.presentation.util.getLabel
+import com.example.fitnessapplication.presentation.util.getIconRes
 
 class WorkoutsAdapter(
     private val onItemClick: (Workout) -> Unit
@@ -36,7 +36,7 @@ class ViewHolder(
         title.text = item.title
         description.text = item.description
         duration.text = item.duration
-        type.text = item.type.getLabel(itemView.context)
+        typeIcon.setImageResource(item.type.getIconRes())
     }
 }
 

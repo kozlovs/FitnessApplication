@@ -2,4 +2,15 @@
     <string name="app_name">Fitness Application</string>
 
     <string name="empty_label">Тут пока что ничего нет</string>
+    <string name="error_label">Кажется, произошла ошибочка</string>
+
+    <string name="workouts_title">Тренировки</string>
+    <string name="workouts_search_hint">Поиск</string>
+    <string name="workout_type_training">Тренировка</string>
+    <string name="workout_type_broadcast">Эфир</string>
+    <string name="workout_type_set">Комплекс</string>
+    <string name="workout_type_another">Другое</string>
+    <string name="workout_type_all">Все</string>
+
+    <string name="duration_minute_label">%d минут</string>
 </resources>
