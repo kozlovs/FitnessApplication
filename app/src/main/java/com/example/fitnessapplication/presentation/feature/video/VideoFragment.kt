@@ -18,7 +18,6 @@ import com.example.fitnessapplication.presentation.util.applyBottomInsets
 import com.example.fitnessapplication.presentation.util.launchOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalTime
 
 @AndroidEntryPoint
@@ -72,7 +71,9 @@ class VideoFragment : Fragment() {
                     fromUser: Boolean
                 ) {}
 
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                    //todo блокировать перемещение сикбара
+                }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
                     seekBar?.progress?.let { viewModel.seekTo(it) }
@@ -83,42 +84,25 @@ class VideoFragment : Fragment() {
 
     private fun subscribe() = with(binding) {
         launchOnStarted {
-            launch {
-                viewModel.state.collectLatest {
-                    updateState(it)
-                }
-            }
-            launch {
-                viewModel.isPlaying.collectLatest {
-                    playerControlLayout.playButton.setIconResource(
-                        if (it) R.drawable.ic_pause else R.drawable.ic_play
-                    )
-                }
-            }
-            launch {
-                launch {
-                    viewModel.currentTime.collectLatest {
-                        playerControlLayout.timeLabel.text = LocalTime.fromMillisecondOfDay(it.toInt()).toMinuteSecondFormat()
-                    }
-                }
-                launch {
-                    viewModel.duration.collectLatest {
-                        playerControlLayout.durationLabel.text = LocalTime.fromMillisecondOfDay(it.toInt()).toMinuteSecondFormat()
-                    }
-                }
-                launch {
-                    viewModel.progress.collectLatest {
-                        playerControlLayout.seekBar.progress = it
-                    }
-                }
+            viewModel.state.collectLatest {
+                updateState(it)
             }
         }
     }
 
     private fun updateState(state: VideoScreenState) = with(binding) {
         playerContent.isVisible = !state.isLoading && state.error == null
-        progressIndicator.isVisible = state.isLoading
+        progressIndicator.isVisible = state.isLoading || state.isStreamLoading
         errorLayout.root.isVisible = state.error != null
         errorLayout.errorMessage.text = state.error?.message ?: getString(R.string.error_label)
+        playerControlLayout.playButton.setIconResource(
+            if (state.isPlaying) R.drawable.ic_pause else R.drawable.ic_play
+        )
+        playerControlLayout.root.isVisible = !state.isStreamLoading
+        playerControlLayout.timeLabel.text = LocalTime.fromMillisecondOfDay(state.currentTime.toInt()).toMinuteSecondFormat()
+        playerControlLayout.durationLabel.text = LocalTime.fromMillisecondOfDay(state.duration.toInt()).toMinuteSecondFormat()
+        if (!state.isStreamLoading && !playerControlLayout.seekBar.isFocused) {
+            playerControlLayout.seekBar.setProgress(state.process, false)
+        }
     }
 }

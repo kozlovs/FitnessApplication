@@ -5,6 +5,22 @@
     android:layout_height="match_parent"
     tools:context=".presentation.feature.video.VideoFragment">
 
+    <include
+        android:id="@+id/error_layout"
+        layout="@layout/layout_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true" />
+
     <FrameLayout
         android:id="@+id/player_content"
         android:layout_width="match_parent"
@@ -28,20 +44,5 @@
             layout="@layout/layout_player_control" />
 
     </FrameLayout>
-
-    <include
-        android:id="@+id/error_layout"
-        layout="@layout/layout_error"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        tools:visibility="visible" />
-
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progress_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
 
 </FrameLayout>

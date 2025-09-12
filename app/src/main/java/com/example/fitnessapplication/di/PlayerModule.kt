@@ -25,7 +25,9 @@ object PlayerModule {
         app: Application,
         simpleCache: SimpleCache
     ): ExoPlayer {
-        val httpDataSourceFactory = DefaultHttpDataSource.Factory()
+        val httpDataSourceFactory = DefaultHttpDataSource.Factory().apply {
+            setAllowCrossProtocolRedirects(true)
+        }
         val cacheDataSourceFactory = CacheDataSource.Factory().setCache(simpleCache)
             .setUpstreamDataSourceFactory(httpDataSourceFactory)
             .setFlags(CacheDataSource.FLAG_IGNORE_CACHE_ON_ERROR)
