@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface VideosApi {
-    @GET("get_video")
+    @GET("/get_video")
     suspend fun getVideoById(
         @Query("id") videoId: Int
     ): VideoDto

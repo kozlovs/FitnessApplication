@@ -19,7 +19,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField("String", "BASE_URL", "\"http://ref.test.kolsa.ru/\"")
+        buildConfigField("String", "BASE_URL", "\"http://ref.test.kolsa.ru\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.datetime)
     implementation(libs.google.hilt.android)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.lifecycle.livedata.ktx)

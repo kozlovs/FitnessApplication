@@ -12,5 +12,6 @@
     <string name="workout_type_another">Другое</string>
     <string name="workout_type_all">Все</string>
 
-    <string name="duration_minute_label">%d минут</string>
+    <string name="duration_minute_label">%s минут</string>
+    <string name="refresh_button_label">Обновить</string>
 </resources>

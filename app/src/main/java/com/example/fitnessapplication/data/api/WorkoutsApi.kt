@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface WorkoutsApi {
 
-    @GET("get_workouts")
+    @GET("/get_workouts")
     suspend fun getWorkouts(): List<WorkoutDto>
 }

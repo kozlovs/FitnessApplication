@@ -6,12 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fitnessapplication.R
 import com.example.fitnessapplication.databinding.FragmentWorkoutsBinding
 import com.example.fitnessapplication.domain.model.workouts.WorkoutType
+import com.example.fitnessapplication.presentation.util.applyBottomInsets
+import com.example.fitnessapplication.presentation.util.applyTopInsets
 import com.example.fitnessapplication.presentation.util.launchOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -34,6 +38,7 @@ class WorkoutsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupLayoutParams()
         setupAdapters()
         subscribe()
         setListeners()
@@ -45,9 +50,17 @@ class WorkoutsFragment : Fragment() {
         workoutsAdapter = null
     }
 
+    private fun setupLayoutParams() = with(binding) {
+        appbarLayout.applyTopInsets()
+        workouts.applyBottomInsets()
+    }
+
     private fun setupAdapters() = with(binding) {
         workoutsAdapter = WorkoutsAdapter {
-
+            findNavController().navigate(
+                R.id.action_workoutsFragment_to_videoFragment,
+                bundleOf("workoutId" to it.id)
+            )
         }
         workouts.apply {
             layoutManager = LinearLayoutManager(activity)
@@ -56,6 +69,9 @@ class WorkoutsFragment : Fragment() {
     }
 
     private fun setListeners() = with(binding) {
+        errorLayout.refreshButton.setOnClickListener {
+            viewModel.loadData()
+        }
         swipeRefresh.setOnRefreshListener { viewModel.refreshData() }
         workoutTypeChipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
             when (checkedIds.firstOrNull()) {
@@ -79,9 +95,12 @@ class WorkoutsFragment : Fragment() {
     }
 
     private fun updateState(state: WorkoutsScreenState) = with(binding) {
-        emptyLayout.root.isVisible = state.workouts.isEmpty() && state.error == null && state.isLoading.not()
+        emptyLayout.root.isVisible =
+            state.workouts.isEmpty() && state.error == null && state.isLoading.not()
         workoutsAdapter?.submitList(state.workouts)
         progressIndicator.isVisible = state.isLoading
         swipeRefresh.isRefreshing = state.isRefreshing
+        errorLayout.root.isVisible = state.error != null
+        errorLayout.errorMessage.text = state.error?.message ?: getString(R.string.error_label)
     }
 }

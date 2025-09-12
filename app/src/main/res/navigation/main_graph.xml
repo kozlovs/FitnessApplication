@@ -19,7 +19,10 @@
         android:id="@+id/videoFragment"
         android:name="com.example.fitnessapplication.presentation.feature.video.VideoFragment"
         android:label="fragment_video"
-        tools:layout="@layout/fragment_video" />
-
+        tools:layout="@layout/fragment_video" >
+        <argument
+            android:name="workoutId"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

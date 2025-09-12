@@ -6,5 +6,5 @@ data class WorkoutsScreenState(
     val workouts: List<Workout> = emptyList(),
     val isLoading: Boolean = true,
     val isRefreshing: Boolean = false,
-    val error: String? = null
+    val error: Exception? = null
 )

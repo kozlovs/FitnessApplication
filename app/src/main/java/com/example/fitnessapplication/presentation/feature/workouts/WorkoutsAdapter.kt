@@ -2,12 +2,14 @@ package com.example.fitnessapplication.presentation.feature.workouts
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitnessapplication.databinding.ItemWorkoutBinding
 import com.example.fitnessapplication.domain.model.workouts.Workout
 import com.example.fitnessapplication.presentation.util.getIconRes
+import com.example.fitnessapplication.presentation.util.minutesToDuration
 
 class WorkoutsAdapter(
     private val onItemClick: (Workout) -> Unit
@@ -35,7 +37,8 @@ class ViewHolder(
         root.setOnClickListener { onItemClick(item) }
         title.text = item.title
         description.text = item.description
-        duration.text = item.duration
+        description.isVisible = item.description != null
+        duration.text = item.duration.minutesToDuration(itemView.context)
         typeIcon.setImageResource(item.type.getIconRes())
     }
 }

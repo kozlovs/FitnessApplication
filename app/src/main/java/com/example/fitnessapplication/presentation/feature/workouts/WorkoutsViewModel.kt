@@ -47,7 +47,7 @@ class WorkoutsViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     isLoading = false,
-                    error = e.message ?: "Неизвестная ошибка"
+                    error = e
                 )
             }
         }
@@ -62,7 +62,7 @@ class WorkoutsViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     isRefreshing = false,
-                    error = e.message ?: "Неизвестная ошибка"
+                    error = e
                 )
             }
         }

@@ -7,28 +7,18 @@
     tools:context=".presentation.feature.workouts.WorkoutsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/toolbar_layout"
+        android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/one_spacing"
         app:liftOnScroll="true">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="112dp"
-            app:expandedTitleMarginBottom="@dimen/double_spacing"
-            app:expandedTitleMarginStart="@dimen/double_spacing"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:title="@string/workouts_title">
-
-            </com.google.android.material.appbar.MaterialToolbar>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:title="@string/workouts_title" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_search"
@@ -107,7 +97,7 @@
 
             <include
                 android:id="@+id/error_layout"
-                layout="@layout/layout_empty_list"
+                layout="@layout/layout_error"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
