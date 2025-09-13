@@ -28,7 +28,7 @@ class VideoViewModel @Inject constructor(
     val player: ExoPlayer,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val workoutId = savedStateHandle.get<Int>("workoutId")
+    private val workoutId = VideoFragmentArgs.fromSavedStateHandle(savedStateHandle).workoutId
 
     private val _state = MutableStateFlow(VideoScreenState())
     val state = _state.asStateFlow()
@@ -48,7 +48,7 @@ class VideoViewModel @Inject constructor(
     fun loadData() = viewModelScope.launch {
         try {
             _state.update { it.copy(isLoading = true, error = null) }
-            val video = videosRepository.getVideoById(workoutId!!)
+            val video = videosRepository.getVideoById(workoutId)
             setVideo(video)
             _state.update { it.copy(isLoading = false, video = video) }
         } catch (e: Exception) {
@@ -71,7 +71,7 @@ class VideoViewModel @Inject constructor(
             object : Player.Listener {
                 override fun onIsLoadingChanged(isLoading: Boolean) {
                     _state.update {
-                        val duration = player.duration.takeIf { it > 0 } ?: 0
+                        val duration = player.duration.takeIf { duration -> duration > 0 } ?: 0
                         it.copy(
                             duration = duration,
                             isStreamLoading = isLoading

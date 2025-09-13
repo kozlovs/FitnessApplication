@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.kapt)
     alias(libs.plugins.google.dagger.hilt.android)
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.androidx.navigation.safeargs)
 }
 
 android {
@@ -72,7 +73,6 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.androidx.media3.exoplayer)
-    implementation(libs.androidx.media3.datasource.rtmp)
     implementation(libs.androidx.media3.ui)
 
     testImplementation(libs.junit)
