@@ -1,20 +1,23 @@
 package com.example.fitnessapplication.presentation.feature.video
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.annotation.OptIn
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.media3.common.util.UnstableApi
 import com.example.fitnessapplication.R
 import com.example.fitnessapplication.databinding.FragmentVideoBinding
 import com.example.fitnessapplication.domain.util.toMinuteSecondFormat
 import com.example.fitnessapplication.presentation.util.applyBottomInsets
+import com.example.fitnessapplication.presentation.util.applyTopInsets
+import com.example.fitnessapplication.presentation.util.getLabel
 import com.example.fitnessapplication.presentation.util.launchOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -50,6 +53,7 @@ class VideoFragment : Fragment() {
 
     @OptIn(UnstableApi::class)
     private fun setupLayoutParams() = with(binding) {
+        settingsLayout.applyTopInsets()
         playerControlLayout.root.applyBottomInsets()
         playerLayout.setAspectRatio(16f/9f)
         viewModel.player.setVideoTextureView(playerView)
@@ -80,6 +84,12 @@ class VideoFragment : Fragment() {
                 }
             }
         )
+        selectQualityButton.setOnClickListener {
+            showQualityDialog()
+        }
+        selectSpeedButton.setOnClickListener {
+            showSpeedDialog()
+        }
     }
 
     private fun subscribe() = with(binding) {
@@ -104,5 +114,24 @@ class VideoFragment : Fragment() {
         if (!state.isStreamLoading && !state.isProgressInteracting) {
             playerControlLayout.seekBar.setProgress(state.process, false)
         }
+
+        playerControlLayout.speedLabel.text = state.selectedSpeed.getLabel(requireContext())
+        playerControlLayout.qualityLabel.text = state.selectedQuality.getLabel(requireContext())
+    }
+
+    private fun showQualityDialog() {
+        val items = viewModel.state.value.qualityList.map { it.getLabel(requireContext()) }.toTypedArray()
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.video_quality_label)
+            .setItems(items) { dialog, which -> viewModel.setQuality(which) }
+            .show()
+    }
+
+    private fun showSpeedDialog() {
+        val items = viewModel.state.value.speedList.map { it.getLabel(requireContext()) }.toTypedArray()
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.video_speed_label)
+            .setItems(items) { dialog, which -> viewModel.setSpeed(which) }
+            .show()
     }
 }

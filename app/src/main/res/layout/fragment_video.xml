@@ -26,6 +26,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/settings_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/double_spacing"
+            android:layout_gravity="top|end"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/select_quality_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/video_quality_label"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/select_speed_button"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/one_spacing"
+                android:layout_height="wrap_content"
+                android:text="@string/video_speed_label"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.media3.ui.AspectRatioFrameLayout
             android:id="@+id/player_layout"
             android:layout_width="match_parent"

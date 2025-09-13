@@ -1,25 +1,26 @@
 package com.example.fitnessapplication.presentation.feature.video
 
 import androidx.annotation.OptIn
+import androidx.core.net.toUri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
+import com.example.fitnessapplication.BuildConfig
 import com.example.fitnessapplication.domain.model.videos.Video
 import com.example.fitnessapplication.domain.repository.VideosRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import androidx.core.net.toUri
-import androidx.media3.common.PlaybackException
-import androidx.media3.common.Player
-import com.example.fitnessapplication.BuildConfig
-import kotlinx.coroutines.flow.asStateFlow
+
 
 @HiltViewModel
 class VideoViewModel @Inject constructor(
@@ -119,6 +120,27 @@ class VideoViewModel @Inject constructor(
 
     fun startSeek() {
         _state.update { it.copy(isProgressInteracting = true) }
+    }
+
+    fun setQuality(position: Int) {
+        _state.update {
+            val newQuality = it.qualityList[position]
+            val params = player.trackSelectionParameters
+                .buildUpon()
+                .setMaxVideoSize(newQuality.width, newQuality.height)
+                .setMinVideoSize(newQuality.width, newQuality.height)
+                .build()
+            player.trackSelectionParameters = params
+            it.copy(selectedQuality = newQuality)
+        }
+    }
+
+    fun setSpeed(position: Int) {
+        _state.update {
+            val newSpeed = it.speedList[position]
+            player.setPlaybackSpeed(newSpeed.value)
+            it.copy(selectedSpeed = newSpeed)
+        }
     }
 
     fun seekTo(positionPercentage: Int) {

@@ -53,4 +53,24 @@
         android:textSize="@dimen/small_text_size"
         tools:text="15:00" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/quality_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/half_spacing"
+        android:textColor="@color/white"
+        android:textSize="@dimen/small_text_size"
+        tools:text="hd" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/speed_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/half_spacing"
+        android:textColor="@color/white"
+        android:textSize="@dimen/small_text_size"
+        tools:text="x1" />
+
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -12,6 +12,14 @@
     <string name="workout_type_another">Другое</string>
     <string name="workout_type_all">Все</string>
 
+    <string name="video_speed_label">Скорость</string>
+    <string name="video_speed_x1">x1</string>
+    <string name="video_speed_x2">x2</string>
+    <string name="video_quality_label">Качество</string>
+    <string name="video_quality_hd">hd</string>
+    <string name="video_quality_full_hd">full hd</string>
+    <string name="video_quality_auto">auto</string>
+
     <string name="duration_minute_label">%s минут</string>
     <string name="refresh_button_label">Обновить</string>
 </resources>
