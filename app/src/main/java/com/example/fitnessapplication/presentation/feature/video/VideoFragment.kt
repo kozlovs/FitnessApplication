@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.media3.common.util.UnstableApi
+import androidx.navigation.fragment.findNavController
 import com.example.fitnessapplication.R
 import com.example.fitnessapplication.databinding.FragmentVideoBinding
 import com.example.fitnessapplication.domain.util.toMinuteSecondFormat
@@ -53,7 +54,7 @@ class VideoFragment : Fragment() {
 
     @OptIn(UnstableApi::class)
     private fun setupLayoutParams() = with(binding) {
-        settingsLayout.applyTopInsets()
+        toolbar.applyTopInsets()
         playerControlLayout.root.applyBottomInsets()
         playerLayout.setAspectRatio(16f/9f)
         viewModel.player.setVideoTextureView(playerView)
@@ -65,6 +66,15 @@ class VideoFragment : Fragment() {
         }
         errorLayout.refreshButton.setOnClickListener {
             viewModel.loadData()
+        }
+        toolbar.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        selectQualityButton.setOnClickListener {
+            showQualityDialog()
+        }
+        selectSpeedButton.setOnClickListener {
+            showSpeedDialog()
         }
 
         playerControlLayout.seekBar.setOnSeekBarChangeListener(
@@ -84,12 +94,6 @@ class VideoFragment : Fragment() {
                 }
             }
         )
-        selectQualityButton.setOnClickListener {
-            showQualityDialog()
-        }
-        selectSpeedButton.setOnClickListener {
-            showSpeedDialog()
-        }
     }
 
     private fun subscribe() = with(binding) {

@@ -9,7 +9,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_empty" />
+        android:src="@drawable/ic_error" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/error_message"

@@ -9,17 +9,21 @@
         android:id="@+id/workoutsFragment"
         android:name="com.example.fitnessapplication.presentation.feature.workouts.WorkoutsFragment"
         android:label="fragment_workouts"
-        tools:layout="@layout/fragment_workouts" >
+        tools:layout="@layout/fragment_workouts">
         <action
             android:id="@+id/action_workoutsFragment_to_videoFragment"
-            app:destination="@id/videoFragment" />
+            app:destination="@id/videoFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
 
     <fragment
         android:id="@+id/videoFragment"
         android:name="com.example.fitnessapplication.presentation.feature.video.VideoFragment"
         android:label="fragment_video"
-        tools:layout="@layout/fragment_video" >
+        tools:layout="@layout/fragment_video">
         <argument
             android:name="workoutId"
             app:argType="integer" />
